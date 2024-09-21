@@ -15,7 +15,7 @@ def root():
 
 
 # endpoint that reads handball court data and renders a map 
-@app.route('FindCourts', methods = ["POST"])
+@app.route('/FindCourts', methods = ["GET"])
 def find_courts():
     '''
     '''
@@ -27,7 +27,8 @@ def find_courts():
     data_dir = os.path.join(os.path.dirname(current_directory), 'Data')
     
     hb_data = pd.read_csv(os.path.join(data_dir, "handball_courts_clean.csv"))
-    
+
+    return render_template('index.html')
 
 
 
