@@ -5,6 +5,7 @@ Application to start the server
 import pandas as pd
 from flask import Flask, render_template
 import os
+import utils 
 
 app = Flask(__name__)
 
@@ -27,6 +28,11 @@ def find_courts():
     data_dir = os.path.join(os.path.dirname(current_directory), 'Data')
     
     hb_data = pd.read_csv(os.path.join(data_dir, "handball_courts_clean.csv"))
+
+    nyc_map = utils.create_map(hb_data)
+
+    # Save the map as an HTML file
+    nyc_map.save('templates/map.html')
 
     return render_template('index.html')
 
