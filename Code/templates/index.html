@@ -6,10 +6,31 @@
   <body>
     <div id="map">Loading map...</div>
     <script>
-        // Load the map from Flask
-        fetch('/map.html').then(response => response.text()).then(html => {
-            document.getElementById('map').innerHTML = html;
+      // Get user's current location
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Send location to Flask app
+        fetch('/FindCourts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ lat: lat, lon: lon} )
         })
-    </script>
-  </body>
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('map').innerHTML = html;
+        })
+      }, function(error) {
+        alert("Unable to retrieve your location. Defaulting to Midtown East in NYC.");
+        fetch('/FindCourts')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('map').innerHTML = html;
+        });
+      });
+      </script>
+    </body>
 </html>
