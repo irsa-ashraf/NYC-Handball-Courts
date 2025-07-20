@@ -4,6 +4,7 @@
     <title>NYC Handball Courts</title>
   </head>
   <body>
+    <div id="map">Loading map...</div>
     <script>
         // Load the map from Flask
         fetch('/map.html').then(response => response.text()).then(html => {
